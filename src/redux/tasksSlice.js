@@ -1,76 +1,61 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import {
-	addTodoThunk,
-	deleteTodoThunk,
-	fetchTodos,
-	toggleTodoThunk,
-} from "./tasksOps";
+import { addContact, deleteContact, fetchContacts } from "./tasksOps";
 
 const initialState = {
 	items: [],
-	searchStr: "",
-	isLoading: false,
-	isError: false,
+	loading: false,
+	error: false,
 };
 
 const slice = createSlice({
-	name: "tasks",
+	name: "contacts",
 	initialState,
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchTodos.fulfilled, (state, action) => {
+			.addCase(fetchContacts.fulfilled, (state, action) => {
 				state.items = action.payload;
 			})
-			.addCase(deleteTodoThunk.fulfilled, (state, action) => {
+			.addCase(deleteContact.fulfilled, (state, action) => {
 				state.items = state.items.filter((item) => item.id !== action.payload);
 			})
-			.addCase(addTodoThunk.fulfilled, (state, action) => {
+			.addCase(addContact.fulfilled, (state, action) => {
 				state.items.push(action.payload);
 			})
-			.addCase(toggleTodoThunk.fulfilled, (state, action) => {
-				const itemIndex = state.items.findIndex(
-					(item) => item.id === action.payload.id
-				);
-				state.items[itemIndex].completed = !state.items[itemIndex].completed;
-			})
 			.addMatcher(
 				isAnyOf(
-					fetchTodos.pending,
-					deleteTodoThunk.pending,
-					addTodoThunk.pending,
-					toggleTodoThunk.pending
+					fetchContacts.pending,
+					deleteContact.pending,
+					addContact.pending
 				),
-				(state, action) => {
-					state.isLoading = true;
+				(state) => {
+					state.loading = true;
 				}
 			)
 			.addMatcher(
 				isAnyOf(
-					fetchTodos.fulfilled,
-					deleteTodoThunk.fulfilled,
-					addTodoThunk.fulfilled,
-					toggleTodoThunk.fulfilled
+					fetchContacts.fulfilled,
+					deleteContact.fulfilled,
+					addContact.fulfilled
 				),
-				(state, action) => {
-					state.isLoading = false;
+				(state) => {
+					state.loading = false;
 				}
 			)
 			.addMatcher(
 				isAnyOf(
-					fetchTodos.rejected,
-					deleteTodoThunk.rejected,
-					addTodoThunk.rejected,
-					toggleTodoThunk.rejected
+					fetchContacts.rejected,
+					deleteContact.rejected,
+					addContact.rejected
 				),
 				(state, action) => {
-					state.isLoading = false;
-					state.isError = action.payload;
+					state.loading = false;
+					state.error = action.payload;
 				}
 			);
 	},
 });
 
-export const tasksReduser = slice.reducer;
-export const selectTasks = (state) => state.tasks.items;
-export const selectIsLoading = (state) => state.tasks.isLoading;
-export const selectIsError = (state) => state.tasks.isError;
+export const contactsReduser = slice.reducer;
+export const selectContacts = (state) => state.contacts.items;
+export const selectloading = (state) => state.contacts.loading;
+export const selecterror = (state) => state.contacts.error;

@@ -2,7 +2,7 @@ import s from "./ContactForm.module.css";
 import { ErrorMessage, Formik, Form, Field } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { addTodoThunk } from "../../redux/tasksOps";
+import { addContact } from "../../redux/tasksOps";
 
 const ContactForm = () => {
 	const initialValues = {
@@ -30,7 +30,7 @@ const ContactForm = () => {
 			name: values.name,
 			number: values.number,
 		};
-		dispatch(addTodoThunk(newContact));
+		dispatch(addContact(newContact));
 		options.resetForm();
 	};
 

@@ -1,15 +1,15 @@
 import s from "./ContactsList.module.css";
 import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
-import { selectTasks } from "../../redux/tasksSlice";
+import { selectContacts } from "../../redux/tasksSlice";
 import { selectSearchStr } from "../../redux/searchSlice";
 
 const ContactList = () => {
-	const contacts = useSelector(selectTasks);
+	const contacts = useSelector(selectContacts);
 	console.log(contacts);
-	const searchStr = useSelector(selectSearchStr);
-	const filteredData = contacts.filter((task) =>
-		task.name.toLowerCase().trim().includes(searchStr.toLowerCase().trim())
+	const filterName = useSelector(selectSearchStr);
+	const filteredData = contacts.filter((contact) =>
+		contact.name.toLowerCase().trim().includes(filterName.toLowerCase().trim())
 	);
 
 	return (
