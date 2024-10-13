@@ -1,5 +1,5 @@
 import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { addContact, deleteContact, fetchContacts } from "./tasksOps";
+import { addContact, deleteContact, fetchContacts } from "./contactsOps";
 import { selectSearchStr } from "./searchSlice";
 
 const initialState = {
